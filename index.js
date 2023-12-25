@@ -1,6 +1,6 @@
 const { Client, version } = require("discord.js");
 const Discord = require("discord.js");
-const config = require("./data/config.json");
+const config = require("../data/config.json");
 const express = require("express");
 const { token, descricao, prefix, lista } = config;
 const bot = new Client();
