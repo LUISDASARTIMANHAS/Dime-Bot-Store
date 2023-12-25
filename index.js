@@ -1,8 +1,10 @@
 const { Client, version } = require("discord.js");
 const Discord = require("discord.js");
+const dotenv = require('dotenv').config();
 const config = require("../data/config.json");
 const express = require("express");
-const { token, descricao, prefix, lista } = config;
+const token = process.env.TOKEN;
+const {descricao, prefix, lista } = config;
 const bot = new Client();
 const novaLinha = "\n";
 const types = ["PLAYING","WATCHING", "STREAMING","LISTENING"]
