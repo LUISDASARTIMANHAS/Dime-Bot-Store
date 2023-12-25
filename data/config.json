@@ -1,0 +1,40 @@
+{
+    "token": "MTE1ODA2MzE0MTY2MjQ5NDczMA.G_O8_I.hGoL8FiBAeYosC5MuRgzRqSEAMCA6YaID7rflU",
+    "descricao": "Dime creator",
+    "prefix": "$",
+    "lista": ["logs here"],
+    "comandos": [
+      {
+        "title":"help",
+        "description":"Usado para ver os comandos e informações"
+      },
+      {
+        "title":"mod-logs",
+        "description":"Usado para Definir os logs para comandos de moderação"
+      },
+      {
+        "title":"ban",
+        "description":"Usado para Banir membros."
+      },
+      {
+        "title":"host",
+        "description":"Usado para ver os status do bot"
+      },
+      {
+        "title":"limpar",
+        "description":"Usado para limpar mensagens"
+      },
+      {
+        "title":"ping",
+        "description":"Usado para ver o leg e latencia do bot"
+      },
+      {
+        "title":"mensagem",
+        "description":"Usado para enviar mensagens como bot"
+      },
+      {
+        "title":"reiniciar",
+        "description":"Usado para reiniciar o bot"
+      }
+    ]
+  }
