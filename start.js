@@ -5,7 +5,7 @@ import fs from "fs";
 import cors from "cors";
 const port = 3000;
 
-const files = "./" + "/src/";
+const files = __dirname + "/src/";
 const path_pages = files + "pages/";
 const path_js = files + "js";
 const forbiddenFilePath = path.join(path_pages, "forbidden.html");

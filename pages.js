@@ -2,7 +2,7 @@ import express from "express";
 const router = express.Router();
 import path from "path";
 
-const files = "./" + "/src/";
+const files = __dirname + "/src/";
 const path_css = files + "css/";
 const path_js = files + "js/"
 const path_pages = files + "pages/";

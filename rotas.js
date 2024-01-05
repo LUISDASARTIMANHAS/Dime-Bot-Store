@@ -3,7 +3,7 @@ const router = express.Router();
 import fs  from "fs";
 import path from "path";
 
-const files2 = "./"+ "/src/";
+const files2 = __dirname + "/src/";
 const path_pages = files2 + "pages/";
 const forbiddenFilePath = path.join(path_pages, "forbidden.html");
 const notFoundFilePath = path.join(path_pages, "not-found.html");
