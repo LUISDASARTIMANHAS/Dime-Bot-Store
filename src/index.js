@@ -4,7 +4,7 @@ import { Client, GatewayIntentBits, Routes } from "discord.js";
 import pingCommand from "./commands/ping.js";
 import helpCommand from "./commands/help.js";
 import fs from "fs";
-const rawData = fs.readFileSync("./src/config.json");
+const rawData = fs.readFileSync("./data/config.json");
 const configs = JSON.parse(rawData);
 const date = new Date();
 const ano = date.getFullYear();
