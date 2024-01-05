@@ -1,6 +1,5 @@
 {
     "descricao": "Dime creator",
-    "prefix": "$",
     "lista": ["logs here"],
     "comandos": [
       {
