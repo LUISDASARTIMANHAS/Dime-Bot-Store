@@ -1,16 +1,16 @@
-const express = require("express");
+import express from "express";
 const app = express();
-const path = require("path");
-const fs = require("fs");
-const cors = require("cors");
+import path from "path";
+import fs from "fs";
+import cors from "cors";
 const port = 3000;
 
 const files = __dirname + "/src/";
 const path_pages = files + "pages/";
 const path_js = files + "js";
 const forbiddenFilePath = path.join(path_pages, "forbidden.html");
-const rotas = require("./rotas");
-const pages = require("./pages");
+import rotas from "./rotas.js";
+import pages from "./pages.js";
 // Configurar o CORS para permitir origens específicas
 const corsOptions = {
   origin: /^https:\/\/.+/,
@@ -54,7 +54,7 @@ app.use(cors(corsOptions));
 app.use(checkHeaderMiddleware);
 app.use(pages);
 app.use(rotas);
-require("./index");
+import * as bot from "./src/index.js";
 
 
 app.listen(port, () => {

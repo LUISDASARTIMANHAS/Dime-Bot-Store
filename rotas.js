@@ -1,13 +1,13 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const fs = require("fs");
-const path = require("path");
+import fs  from "fs";
+import path from "path";
 
-const files2 = __dirname + "/src/";
+const files2 = "./"+ "/src/";
 const path_pages = files2 + "pages/";
 const forbiddenFilePath = path.join(path_pages, "forbidden.html");
 const notFoundFilePath = path.join(path_pages, "not-found.html");
-const cors = require("cors");
+import cors from "cors";
 
 router.use(cors({ origin: "*" }));
 router.use(express.urlencoded({ extended: true }));
@@ -19,4 +19,4 @@ router.use((req, res, next) => {
   res.sendFile(notFoundFilePath);
 });
 
-module.exports = router;
+export default router;

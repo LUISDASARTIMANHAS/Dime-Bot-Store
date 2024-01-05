@@ -1,0 +1,123 @@
+import { config } from "dotenv";
+import { REST } from "@discordjs/rest";
+import { Client, GatewayIntentBits, Routes } from "discord.js";
+import pingCommand from "./commands/ping.js";
+import helpCommand from "./commands/help.js";
+import fs from "fs";
+const rawData = fs.readFileSync("./src/config.json");
+const configs = JSON.parse(rawData);
+const date = new Date();
+const ano = date.getFullYear();
+const types = ["PLAYING", "WATCHING", "STREAMING", "LISTENING"];
+config();
+const token = process.env.TOKEN;
+const CLIENT_ID = process.env.CLIENT_ID;
+const bot = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+  ],
+});
+const rest = new REST({ version: "10" }).setToken(token);
+
+bot.on("ready", async () => {
+  const usersCount = bot.users.cache.size;
+  const channelsCount = bot.channels.cache.size;
+  const guildsCount = bot.guilds.cache.size;
+  const botTag = bot.user.tag;
+  const pingobrasLOG = await bot.channels.fetch("1032778034811506738");
+  const activities = [
+    `${guildsCount} servidores!`,
+    configs.flag + configs.descricao + ano,
+    `${channelsCount} canais!`,
+    configs.flag + configs.descricao + ano,
+    `${usersCount} usuários!`,
+    configs.flag + configs.descricao + ano,
+  ];
+  const info =
+      "ℹ️" +
+      botTag +
+      " Conectou-se Ao Servidor De Hosteamento #04 \n" +
+      "✅INICIADO POR: WebSiteHost \n" +
+      "Duração:30Min Ou Infinita Pelo Dedicado \n" +
+      "**Alterações:** \n" +
+      configs.lista;
+
+  alterarStatus();
+  setInterval(alterarStatus, 60000);
+
+  let embedStatus = {
+    title: "**__🖥️MENSAGEM DO SERVIDOR PINGOBRAS🖥️:__**",
+    description: info,
+    color: 65280,
+  };
+  pingobrasLOG.send({ embeds: [embedStatus] });
+
+  console.log("Usuários:" + usersCount);
+  console.log("Canais:" + channelsCount);
+  console.log("Servidores:" + guildsCount);
+
+  function alterarStatus() {
+    const ramdomActivity =
+      activities[Math.floor(Math.random() * activities.length)];
+    const ramdomType = types[Math.floor(Math.random() * types.length)];
+
+    bot.user.setPresence({
+      activity: { type: ramdomType, name: ramdomActivity },
+    });
+    console.log("STATUS DO DISCORD DO " + botTag);
+    console.log("Atividade do Status: " + ramdomType + ": " + ramdomActivity);
+  }
+});
+
+bot.on("interactionCreate", (interaction) => {
+  if ((interaction.isChatInputCommand()) && (interaction.commandName === 'pedido')) {
+        const comida = interaction.options.get('comidas').value
+        const bebida = interaction.options.get('bebidas').value
+        console.log(comida);
+        console.log(bebida);
+
+        interaction.reply({
+            content: "Seu pedido foi feito: " + comida + ", e para acompanhar: " + bebida
+        })
+    }
+  if (interaction.isCommand() && interaction.commandName === "sayembed") {
+    const titulo = interaction.options.getString("title");
+    const descricao = interaction.options.getString("description");
+    const color = parseInt(
+      interaction.options.getString("color").replace("#", ""),
+      16
+    ); // Converte a cor hexadecimal para um número inteiro
+    const channel = interaction.options.getChannel("channel");
+
+    const embed = {
+      title: titulo,
+      description: descricao,
+      color: color,
+    };
+
+    // Envia o embed diretamente para o canal fornecido
+    interaction.guild.channels.cache.get(channel.id).send({ embeds: [embed] });
+    interaction.reply({
+      content: `Embed enviado para o canal ${channel.name}!`,
+    });
+  }
+});
+
+async function main() {
+  const commands = [
+    pingCommand,
+    helpCommand
+  ];
+  try {
+    console.log("Recarregando comandos de barra /");
+    await rest.put(Routes.applicationCommands(CLIENT_ID), {
+      body: commands,
+    });
+    bot.login(token);
+  } catch (err) {
+    console.log(err);
+  }
+}
+main();
