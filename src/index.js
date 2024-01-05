@@ -1,6 +1,6 @@
 import { config } from "dotenv";
 import { REST } from "@discordjs/rest";
-import { Client, GatewayIntentBits, Routes } from "discord.js";
+import { Activity, ActivityType, Client, GatewayIntentBits, Routes } from "discord.js";
 import pingCommand from "./commands/ping.js";
 import helpCommand from "./commands/help.js";
 import fs from "fs";
@@ -8,7 +8,6 @@ const rawData = fs.readFileSync("./data/config.json");
 const configs = JSON.parse(rawData);
 const date = new Date();
 const ano = date.getFullYear();
-const types = ["PLAYING", "WATCHING", "STREAMING", "LISTENING"];
 config();
 const token = process.env.TOKEN;
 const CLIENT_ID = process.env.CLIENT_ID;
@@ -27,7 +26,7 @@ bot.on("ready", async () => {
   const guildsCount = bot.guilds.cache.size;
   const botTag = bot.user.tag;
   const pingobrasLOG = await bot.channels.fetch("1032778034811506738");
-  const activities = [
+  const atividades = [
     `${guildsCount} servidores!`,
     configs.flag + configs.descricao + ano,
     `${channelsCount} canais!`,
@@ -50,7 +49,7 @@ bot.on("ready", async () => {
   let embedStatus = {
     title: "**__🖥️MENSAGEM DO SERVIDOR PINGOBRAS🖥️:__**",
     description: info,
-    color: 65280,
+    color: 16753920,
   };
   pingobrasLOG.send({ embeds: [embedStatus] });
 
@@ -59,15 +58,40 @@ bot.on("ready", async () => {
   console.log("Servidores:" + guildsCount);
 
   function alterarStatus() {
-    const ramdomActivity =
-      activities[Math.floor(Math.random() * activities.length)];
-    const ramdomType = types[Math.floor(Math.random() * types.length)];
+    const ramdomActivity = atividades[getRandomInt(atividades.length-1)];
+    const status = [
+      {
+        name: ramdomActivity,
+        type: ActivityType.Competing
+      },
+      {
+        name: "Website: pingobras.glitch.me",
+        type: ActivityType.Custom
+      },
+      {
+        name: ramdomActivity,
+        type: ActivityType.Listening
+      },
+      {
+        name: ramdomActivity,
+        type: ActivityType.Playing
+      },
+      {
+        name: ramdomActivity,
+        type: ActivityType.Streaming,
+        url: "https://pingobras.glitch.me"
+      },
+      {
+        name: ramdomActivity,
+        type: ActivityType.Watching
+      },
+    ]
+    const ramdomStatus = status[getRandomInt(status.length-1)]
 
-    bot.user.setPresence({
-      activity: { type: ramdomType, name: ramdomActivity },
-    });
+    bot.user.setActivity(ramdomStatus);
+    bot.user.setStatus("idle");
     console.log("STATUS DO DISCORD DO " + botTag);
-    console.log("Atividade do Status: " + ramdomType + ": " + ramdomActivity);
+    console.log(`Atividade do Status: ${ramdomActivity}`);
   }
 });
 
@@ -121,3 +145,7 @@ async function main() {
   }
 }
 main();
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
