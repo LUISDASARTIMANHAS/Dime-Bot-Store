@@ -2,7 +2,9 @@ import express from "express";
 const router = express.Router();
 import fs  from "fs";
 import path from "path";
+import {fileURLToPath} from 'url';
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const files2 = __dirname + "/src/";
 const path_pages = files2 + "pages/";
 const forbiddenFilePath = path.join(path_pages, "forbidden.html");

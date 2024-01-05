@@ -4,7 +4,9 @@ import path from "path";
 import fs from "fs";
 import cors from "cors";
 const port = 3000;
+import {fileURLToPath} from 'url';
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const files = __dirname + "/src/";
 const path_pages = files + "pages/";
 const path_js = files + "js";
