@@ -28,11 +28,11 @@ bot.on("ready", async () => {
   const pingobrasLOG = await bot.channels.fetch("1032778034811506738");
   const atividades = [
     `${guildsCount} servidores!`,
-    configs.flag + configs.descricao + ano,
+    configs.descricao + ano,
     `${channelsCount} canais!`,
-    configs.flag + configs.descricao + ano,
+    configs.descricao + ano,
     `${usersCount} usuários!`,
-    configs.flag + configs.descricao + ano,
+    configs.descricao + ano,
   ];
   const info =
       "ℹ️" +
@@ -75,11 +75,6 @@ bot.on("ready", async () => {
       {
         name: ramdomActivity,
         type: ActivityType.Playing
-      },
-      {
-        name: ramdomActivity,
-        type: ActivityType.Streaming,
-        url: "https://pingobras.glitch.me"
       },
       {
         name: ramdomActivity,

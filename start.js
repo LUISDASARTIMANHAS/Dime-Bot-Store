@@ -1,10 +1,21 @@
-import express from "express";
-const app = express();
-import path from "path";
-import fs from "fs";
-import cors from "cors";
+import express from "express"
+import ddos from "ddos"
+const app = express()
+import xss from "xss"
+import path from "path"
+import {fileURLToPath} from 'url'
+import httpsSecurity from "./modules/httpsSecurity.js"
+import checkHeaderMiddleware from "./modules/checkHeaderMiddleware.js"
 const port = 3000;
-import {fileURLToPath} from 'url';
+const params = {
+  limit: 100,
+  maxcount: 200,
+  trustProxy: true,
+  includeUserAgent: true,
+  whitelist: [],
+  testmode: false,
+};
+const limiter = new ddos(params);
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const files = __dirname + "/src/";
@@ -13,50 +24,29 @@ const path_js = files + "js";
 const forbiddenFilePath = path.join(path_pages, "forbidden.html");
 import rotas from "./rotas.js";
 import pages from "./pages.js";
-// Configurar o CORS para permitir origens específicas
-const corsOptions = {
-  origin: /^https:\/\/.+/,
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  optionsSuccessStatus: 204,
-};
-const checkHeaderMiddleware = (req, res, next) => {
-  const origin = req.headers.referer || req.headers.referrer;
-  const keyHeader = req.headers["authorization"];
-  const blockedRoutes = [
-    "/admin"
-  ];
-  const blockRoutesPresent = blockedRoutes.includes(req.path);
-  const payload = JSON.stringify(req.body, null, 2);
-  const key = "snve072509ç$";
-  const key2 = "snve072509Ã§$";
-  const key3 = "snve072509&Aplication";
 
-  const validKey = keyHeader === key;
-  const validKey2 = keyHeader === key2;
-  const validKey3 = keyHeader === key3;
-  const auth1 = blockRoutesPresent && !validKey;
-  const auth2 = blockRoutesPresent && !validKey2;
-  const auth3 = blockRoutesPresent && !validKey3;
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(limiter.express);
+app.use(httpsSecurity);
 
-  console.log("-------------------------");
-  console.log("SISTEMA <CHECK> <OBTER>: " + req.url);
-  console.log("SISTEMA <ORIGEM>: " + origin);
-  console.log("SISTEMA <PAYLOAD>: " + payload);
-  if (auth1 && auth2 && auth3) {
-    // Se estiver solicitando das rotas bloqueadas E não conter key, bloquea a solicitação
-    print(keyHeader, key, key2, key3, auth1, auth2, auth3);
-    forbidden(res);
-  } else {
-    // Cabeçalho "solicitador" presente ou rota não bloqueada, permite o acesso
-    print(keyHeader, key, key2, key3, auth1, auth2, auth3);
-    next();
+// Middleware para adicionar meta tags SEO
+app.use((req, res, next) => {
+  res.setHeader("og-Title", "Título Padrão");
+  res.setHeader("og-Description", "Descrição Padrão");
+  for (const key in req.body) {
+    req.body[key] = xss(req.body[key]);
   }
-};
-app.use(cors(corsOptions));
-app.use(checkHeaderMiddleware);
+  next();
+});
+autoEditais(dia, dia7, mes, ano);
+
 app.use(pages);
+app.use((req, res, next) => {
+  checkHeaderMiddleware(req, res, next);
+});
 app.use(rotas);
-import * as bot from "./src/index.js";
+import "./src/index.js";
 
 
 app.listen(port, () => {
