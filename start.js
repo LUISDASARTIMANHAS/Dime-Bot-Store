@@ -39,7 +39,6 @@ app.use((req, res, next) => {
   }
   next();
 });
-autoEditais(dia, dia7, mes, ano);
 
 app.use(pages);
 app.use((req, res, next) => {

@@ -1,6 +1,8 @@
 import fs from "fs";
 import path from "path";
 import xss from "xss";
+import {fileURLToPath} from 'url'
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const filesServer = __dirname + "/../src/";
 const path_pages = filesServer + "pages/";
 const forbiddenFilePath = path.join(path_pages, "forbidden.html");
