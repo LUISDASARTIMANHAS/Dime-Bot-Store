@@ -39,7 +39,8 @@
     "discord"
   ],
   "scripts": {
-    "start": "npm install && node start.js",
+    "start": "node start.js",
+    "install_and_start": "npm install && node start.js",
     "start:dev": "nodemon start.js",
     "autoInstall": "npm install"
   },
