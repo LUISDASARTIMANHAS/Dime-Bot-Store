@@ -41,7 +41,7 @@
   "scripts": {
     "start": "npm install && node start.js",
     "start:dev": "nodemon start.js",
-    "autoInstall": "npm install && node start.js"
+    "autoInstall": "npm install"
   },
   "description": "Template de discord bot usando o node.js para criar site e hospedar bot com o js"
 }
