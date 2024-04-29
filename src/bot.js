@@ -14,6 +14,7 @@ import { helpCommand, handleHelp } from "./comandos/help.js";
 import { sendLogs, sendLogsEmbed } from "./comandos/sendLogs.js";
 import { showServersCommand, handleShowServers } from "./comandos/showServers.js";
 import { sayEmbedCommand, handleSayEmbed } from "./comandos/send-embed.js";
+import { banCommand, handleBan } from "./comandos/ban.js";
 const rawData = fs.readFileSync("./data/config.json");
 const configs = JSON.parse(rawData);
 const date = new Date();
@@ -107,6 +108,7 @@ bot.on("interactionCreate", (interaction) => {
   handleHelp(interaction);
   handleShowServers(interaction,bot.guilds.cache);
   handleSayEmbed(interaction);
+  handleBan(interaction);
 });
 
 async function main() {
@@ -114,7 +116,8 @@ async function main() {
     pingCommand,
     helpCommand,
     showServersCommand,
-    sayEmbedCommand
+    sayEmbedCommand,
+    banCommand
   ];
   try {
     console.log("Recarregando comandos de barra /");

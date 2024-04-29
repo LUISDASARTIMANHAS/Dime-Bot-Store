@@ -1,17 +1,33 @@
-const Discord = require("discord.js");
-const embed = new Discord.MessageEmbed();
-const {comandos, prefix} = require("../../data/config.json");
+import { SlashCommandBuilder } from "@discordjs/builders";
 
-module.exports.run = async (bot, message, args) => {
-  const novaLinha = "\n";
+let banCommand = new SlashCommandBuilder()
+  .setName('ban')
+  .setDescription('Usado para moderação do servidor')
 
-  let info = "ℹ️" + novaLinha;
-  
-  embed.setTitle(`**__BAN__**`);
-  embed.setColor("#00FF00");
-  embed.setDescription(info);
-  embed.setTimestamp();
+banCommand = banCommand.toJSON();
 
-  message.delete().catch((O_o) => {});
-  message.channel.send(embed);
-};
+// help.js
+function handleBan(interaction) {
+  if (interaction.commandName === 'ban') {
+    const date = new Date();
+
+    let info = `
+    Usuario X banido.
+    Moderador: x
+    Motivo: x
+    `
+    const embed = {
+      title: "**__BAN__**",
+      description: info,
+      color: parseInt("FF0000", 16),
+      timestamp: date
+    };
+
+    interaction.reply({ embeds: [embed] });
+  }
+}
+
+export {
+  banCommand,
+  handleBan
+}
