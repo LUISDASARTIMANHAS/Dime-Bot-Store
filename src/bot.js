@@ -19,8 +19,8 @@ const configs = JSON.parse(rawData);
 const date = new Date();
 const ano = date.getFullYear();
 config();
-const token = process.env.TOKEN;
-const CLIENT_ID = process.env.CLIENT_ID;
+const token = process.env.BOT_STORE_TOKEN;
+const CLIENT_ID = process.env.BOT_STORE_CLIENT_ID;
 const bot = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -118,6 +118,10 @@ async function main() {
   ];
   try {
     console.log("Recarregando comandos de barra /");
+    for (let i = 0; i < commands.length; i++) {
+      const command = commands[i];
+      console.log(`comando: ${JSON.stringify(command, null,2)}. Foi carregado!`);
+    }
     await rest.put(Routes.applicationCommands(CLIENT_ID), {
       body: commands,
     });

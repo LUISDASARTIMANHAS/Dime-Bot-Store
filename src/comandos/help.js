@@ -9,8 +9,10 @@ helpCommand = helpCommand.toJSON();
 // help.js
 function handleHelp(interaction) {
     if (interaction.commandName === 'help') {
+        const date = new Date();
         const novaLinha = "\n";
-        let info = "ℹ️__**prefixo:**__ " + prefix + novaLinha;
+        let info = ""
+        const comandos = []
 
         // Iterar sobre cada comando no JSON
         comandos.forEach((comando) => {
@@ -20,11 +22,12 @@ function handleHelp(interaction) {
                 novaLinha
         });
 
-        const embed = new Discord.MessageEmbed();
-        embed.setTitle(`**__PAINEL DE AJUDA__**`);
-        embed.setColor("#FF00FF");
-        embed.setDescription(info);
-        embed.setTimestamp();
+        const embed = {
+            title: "**__PAINEL DE AJUDA__**",
+            description: info,
+            color: parseInt("FFF000", 16),
+            timestamp: date
+        };
 
         interaction.reply({ embeds: [embed] });
     }
