@@ -45,7 +45,7 @@ app.use((req, res, next) => {
   checkHeaderMiddleware(req, res, next);
 });
 app.use(rotas);
-import "./src/index.js";
+import "./src/bot.js";
 
 
 app.listen(port, () => {
