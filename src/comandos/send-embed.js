@@ -25,7 +25,7 @@ let sayEmbedCommand = new SlashCommandBuilder()
     )
 sayEmbedCommand = sayEmbedCommand.toJSON()
 
-function handleSayEmbedCommand(interaction) {
+function handleSayEmbed(interaction) {
     if (interaction.commandName === "sayembed") {
         const titulo = interaction.options.getString("title");
         const descricao = interaction.options.getString("description");
@@ -51,5 +51,5 @@ function handleSayEmbedCommand(interaction) {
 
 export {
     sayEmbedCommand,
-    handleSayEmbedCommand
+    handleSayEmbed
 };

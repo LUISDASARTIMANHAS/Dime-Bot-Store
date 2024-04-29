@@ -13,7 +13,7 @@ import { pingCommand, handlePing } from "./comandos/ping.js";
 import { helpCommand, handleHelp } from "./comandos/help.js";
 import { sendLogs, sendLogsEmbed } from "./comandos/sendLogs.js";
 import { showServersCommand, handleShowServers } from "./comandos/showServers.js";
-import { sendEmbed, handleS } from "./comandos/showServers.js";
+import { sayEmbedCommand, handleSayEmbed } from "./comandos/send-embed.js";
 const rawData = fs.readFileSync("./data/config.json");
 const configs = JSON.parse(rawData);
 const date = new Date();
@@ -55,9 +55,9 @@ bot.on("ready", async () => {
 
   alterarStatus();
   setInterval(alterarStatus, 60000);
-   // sendLogs(channelLogs, "<@1133630381153861743>");
+   // sendLogs(pingobrasLOG, "<@1133630381153861743>");
    sendLogsEmbed(
-    channelLogs,
+    pingobrasLOG,
     "**__🖥️MENSAGEM DO SERVIDOR🖥️:__**",
     info,
     16753920,
@@ -106,16 +106,15 @@ bot.on("interactionCreate", (interaction) => {
   handlePing(interaction);
   handleHelp(interaction);
   handleShowServers(interaction,bot.guilds.cache);
-  handleCreatePainel(interaction);
+  handleSayEmbed(interaction);
 });
 
 async function main() {
   const commands = [
     pingCommand,
     helpCommand,
-    sendLogs,
     showServersCommand,
-    sendEmbed
+    sayEmbedCommand
   ];
   try {
     console.log("Recarregando comandos de barra /");
